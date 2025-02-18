@@ -5,8 +5,10 @@ import Login from './pages/Login/Login';
 import NotFound from './pages/NotFound/NotFound';
 import AuthContextProvider from './context/Auth/Auth';
 import Home from './pages/Home/Home';
+
 import ProtectedRoute from './pages/ProtectedRoute/ProtectedRoute';
 import Shop from './pages/Shop/Shop'; 
+import ProductDetails from './pages/Shop/ProductDetails'; // ✅ Added ProductDetails page
 import { Toaster } from 'react-hot-toast';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -17,13 +19,12 @@ import RedirectIfAuthenticated from './components/RedirectIfAuthenticated/Redire
 
 function App() {
 
-  
   const queryClient = new QueryClient();
 
   const router = createBrowserRouter([
     {
       path: '',
-      element: <MainLayout />, // ✅ Ensures Shop page includes Navbar & Footer
+      element: <MainLayout />,
       children: [
         {
           index: true,
@@ -62,10 +63,18 @@ function App() {
           ),
         },
         {
-          path: 'shop', // ✅ Added the Shop page inside MainLayout
+          path: 'shop', 
           element: (
             <ProtectedRoute>
               <Shop />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: 'shop/product/:id', // ✅ Added product details route
+          element: (
+            <ProtectedRoute>
+              <ProductDetails />
             </ProtectedRoute>
           ),
         },
@@ -76,11 +85,11 @@ function App() {
 
   return (
     <AuthContextProvider>
-        <QueryClientProvider client={queryClient}>
-          <Toaster />
-          {/* <ReactQueryDevtools initialIsOpen={false} /> */}
-          <RouterProvider router={router} />
-        </QueryClientProvider>
+      <QueryClientProvider client={queryClient}>
+        <Toaster />
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </AuthContextProvider>
   );
 }

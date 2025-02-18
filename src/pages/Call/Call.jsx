@@ -1,61 +1,95 @@
-import { useEffect, useState } from 'react';
-import companyImage from '../../assets/LOGOS.jpg';
+import { useState } from "react";
+import { FaEnvelope, FaPhone, FaMapMarkerAlt } from "react-icons/fa";
 
-export default function Calls() {
-  const [companyInfo, setCompanyInfo] = useState({
-    name: 'BnC Computech Trading',
-    mission: 'Cheap, Reliable and Quick',
-    paragraph: 'Discover top quality computers at unbeatable prices where affordability meets reliability. Get the latest tech with fast shipping and excellent customer support, ensuring a seamless shopping experience every time.',
-    address: 'V.Albano, Mandaue City, Cebu',
-    phone: '12345567',
-    email: 'contact@techsolutions.com',
-    facebook: 'https://facebook.com/BnCComputech',
-    instagram: 'https://instagram.com/BnCComputech',
+const ContactUs = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
   });
 
-  useEffect(() => {
-    document.title = 'BNC';
-  }, []);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form submitted:", formData);
+  };
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <div className="flex flex-col md:flex-row items-center gap-5">
-        {/* Company Image */}
-        <div className="w-full md:w-1/3">
-          <img src={companyImage} alt="Company" className="rounded-lg shadow-lg" />
-        </div>
-
-        {/* Company Details */}
-        <div className="w-full md:w-2/3 text-center md:text-left">
-          <h2 className="text-4xl font-bold text-gray-800 dark:text-white md:text-left">{companyInfo.name}</h2>
-          <p className="mt-12 text-lg text-gray-700 font-bold dark:text-gray-300">{companyInfo.mission}</p>
-          <p className="mt-5 text-gray-500 dark:text-gray-400">{companyInfo.paragraph}</p>
-          <p className="mt-7 text-gray-900 font-bold dark:text-gray-700">{companyInfo.address}</p>
-
-          <div className="mt-9 text-center">
-        <h3 className="text-2xl font-semibold text-gray-800 dark:text-white">Contact Us</h3>
-        <div className="flex justify-center gap-6 mt-6">
-          <a href={`tel:${companyInfo.phone}`} className="text-green-600 text-2xl hover:text-green-700">
-            <i className="fas fa-phone"></i>
-          </a>
-          <a href={`mailto:${companyInfo.email}`} className="text-blue-600 text-2xl hover:text-blue-700">
-            <i className="fas fa-envelope"></i>
-          </a>
-          <a href={companyInfo.facebook} target="_blank" rel="noopener noreferrer" className="text-blue-700 text-2xl hover:text-blue-800">
-            <i className="fab fa-facebook"></i>
-          </a>
-          <a href={companyInfo.instagram} target="_blank" rel="noopener noreferrer" className="text-pink-600 text-2xl hover:text-pink-700">
-            <i className="fab fa-instagram"></i>
-          </a>
+    <div className="max-w-4xl mx-auto py-10 px-5">
+      {/* Header Section with a Smaller Background */}
+      <div className="flex justify-center">
+        <div className="bg-violet-400 text-white text-center py-4 px-8 rounded-lg shadow-lg">
+          <h2 className="text-3xl font-bold">Contact Us</h2>
         </div>
       </div>
 
+      <div className="grid md:grid-cols-2 gap-8 mt-8">
+        {/* Get in Touch Section with Background */}
+        <div className="bg-gray-100 p-6 rounded-lg shadow-md">
+          <h3 className="text-xl font-semibold mb-4">Get in Touch</h3>
+          <p className="text-gray-600 mb-4">
+            Looking for Cheap, Reliable, and Quick Service? Feel free to reach us at these infos.
+          </p>
+          <div className="space-y-3">
+            <p className="flex items-center gap-2">
+              <FaMapMarkerAlt className="text-violet-500" />
+              Mandaue, Maguikay
+            </p>
+            <p className="flex items-center gap-2">
+              <FaPhone className="text-violet-500" />
+              +123 456 7890
+            </p>
+            <p className="flex items-center gap-2">
+              <FaEnvelope className="text-violet-500" />
+              bnccomputech@gmail.com
+            </p>
+          </div>
+        </div>
 
+        {/* Send a Message Form */}
+        <div>
+          <h3 className="text-xl font-semibold mb-4">Send a Message</h3>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <input
+              type="text"
+              name="name"
+              placeholder="Your Name"
+              value={formData.name}
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-lg"
+              required
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Your Email"
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-lg"
+              required
+            />
+            <textarea
+              name="message"
+              placeholder="Your Message"
+              value={formData.message}
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-lg h-32"
+              required
+            ></textarea>
+            <button
+              type="submit"
+              className="w-full bg-violet-400 text-white p-3 rounded-lg hover:bg-green-600 transition"
+            >
+              Send Message
+            </button>
+          </form>
         </div>
       </div>
-
-      {/* Contact Information */}
-      
     </div>
   );
-}
+};
+
+export default ContactUs;
